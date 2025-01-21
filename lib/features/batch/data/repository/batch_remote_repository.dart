@@ -1,31 +1,27 @@
 import 'package:dartz/dartz.dart';
 import 'package:softwarica_student_management_bloc/core/error/failure.dart';
 import 'package:softwarica_student_management_bloc/features/batch/data/data_source/batch_remote_source.dart';
-
 import 'package:softwarica_student_management_bloc/features/batch/domain/entity/batch_entity.dart';
 import 'package:softwarica_student_management_bloc/features/batch/domain/repository/batch_repository.dart';
 
-class BatchRemoteRepository   implements IBatchRepository{
+class BatchRemoteRepository implements IBatchRepository {
   final BatchRemoteDataSource remoteDatasource;
 
   BatchRemoteRepository({required this.remoteDatasource});
 
-
   @override
-  Future<Either<Failure, void>> createBatch(BatchEntity batch)async {
-   try{
-    remoteDatasource.createBatch(batch);
-    return Right(null);
-
-   } catch (e) {
-    return Left(
-      ApiFailure(
-       message: e.toString(),
-      ),
-    );
-   }
+  Future<Either<Failure, void>> createBatch(BatchEntity batch) async {
+    try {
+      remoteDatasource.createBatch(batch);
+      return Right(null);
+    } catch (e) {
+      return Left(
+        ApiFailure(
+          message: e.toString(),
+        ),
+      );
+    }
   }
-  
 
   @override
   Future<Either<Failure, void>> deleteBatch(String id) {
@@ -38,5 +34,4 @@ class BatchRemoteRepository   implements IBatchRepository{
     // TODO: implement getBatches
     throw UnimplementedError();
   }
-
 }
