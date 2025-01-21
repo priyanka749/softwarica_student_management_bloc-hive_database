@@ -84,8 +84,10 @@ _initCourseDependencies() {
 
   // Remote Data Source
   getIt.registerFactory<CourseRemoteDataSource>(
-      () => CourseRemoteDataSource(dio: getIt<Dio>()));
-
+    () => CourseRemoteDataSource(
+      dio: getIt<Dio>(),
+    ),
+  );
   // Local Repository
   getIt.registerLazySingleton<CourseLocalRepository>(() =>
       CourseLocalRepository(
@@ -97,9 +99,15 @@ _initCourseDependencies() {
           remoteDatasource: getIt<CourseRemoteDataSource>()));
 
   // Usecases
+  // getIt.registerLazySingleton<CreateCourseUsecase>(
+  //   () => CreateCourseUsecase(
+  //     courseRepository: getIt<CourseLocalRepository>(), // Update if needed
+  //   ),
+  // );
+
   getIt.registerLazySingleton<CreateCourseUsecase>(
     () => CreateCourseUsecase(
-      courseRepository: getIt<CourseLocalRepository>(), // Update if needed
+      courseRepository: getIt<CourseRemoteRepository>(), // Update if needed
     ),
   );
 
@@ -145,9 +153,6 @@ _initBatchDependencies() async {
       BatchRemoteRepository(remoteDatasource: getIt<BatchRemoteDataSource>()));
 
   // Usecases
-  getIt.registerLazySingleton<CreateBatchUseCase>(
-    () => CreateBatchUseCase(batchRepository: getIt<BatchLocalRepository>()),
-  );
 
   getIt.registerLazySingleton<CreateBatchUseCase>(
     () => CreateBatchUseCase(batchRepository: getIt<BatchRemoteRepository>()),
